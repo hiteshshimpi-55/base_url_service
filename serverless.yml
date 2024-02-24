@@ -26,11 +26,12 @@ functions:
       - http:
           path: varys/insertbaseurl
           method: POST
-     iamRoleStatements:
+    iamRoleStatements:
       - Effect: Allow
         Action:
           - "s3:Put*"
-        Resource: arn:aws:s3:::${self:custom.fileBucketName}/*      
+        Resource: arn:aws:s3:::${self:custom.fileBucketName}/*
+
   getBaseUrl:
     handler: src/get_url.handler
     name: get-base-url
@@ -39,7 +40,12 @@ functions:
       - http:
           path: varys/getbaseurl
           method: GET
-          
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "s3:Get*"
+        Resource: arn:aws:s3:::${self:custom.fileBucketName}/*
+
 resources:
   Resources:
     FileBucket:
