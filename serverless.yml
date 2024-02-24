@@ -1,4 +1,4 @@
-service: activity-service
+service: varys-service
 
 provider:
   name: aws
