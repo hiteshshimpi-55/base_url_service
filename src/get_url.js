@@ -1,12 +1,22 @@
-const fs = require("fs").promises;
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3();
+
+const BUCKET_NAME = process.env.FILE_UPLOAD_BUCKET_NAME;
+const objectKey = "data.json";
+
 module.exports.handler = async (event) => {
   console.log(event);
 
   const response = { statusCode: 200 };
-  const filePath = "./data.json";
   try {
-    const fileContent = await fs.readFile(filePath, "utf8");
-    const data = JSON.parse(fileContent);
+    const s3Object = await s3
+      .getObject({
+        Bucket: BUCKET_NAME,
+        Key: objectKey,
+      })
+      .promise();
+    const data = JSON.parse(s3Object.Body.toString());
+
     response.body = JSON.stringify(data);
   } catch (error) {
     console.log(error);

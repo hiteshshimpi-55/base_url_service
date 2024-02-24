@@ -8,9 +8,14 @@ provider:
   apiName: ${self:service}
   memorySize: 128 # MB
   timeout: 10 # Seconds
+  environment:
+    FILE_UPLOAD_BUCKET_NAME: ${self:custom.fileBucketName}
 
 plugins:
   - serverless-iam-roles-per-function
+
+custom:
+  fileBucketName: varys-file-bucket-${self:provider.stage}
 
 functions:
   insertUrl:
@@ -21,6 +26,11 @@ functions:
       - http:
           path: varys/insertbaseurl
           method: POST
+     iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - "s3:Put*"
+        Resource: arn:aws:s3:::${self:custom.fileBucketName}/*      
   getBaseUrl:
     handler: src/get_url.handler
     name: get-base-url
@@ -29,3 +39,11 @@ functions:
       - http:
           path: varys/getbaseurl
           method: GET
+          
+resources:
+  Resources:
+    FileBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.fileBucketName}
+        AccessControl: Private
