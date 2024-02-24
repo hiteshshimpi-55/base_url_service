@@ -1,4 +1,4 @@
-service: varys-service
+service: varys service
 
 provider:
   name: aws
@@ -19,7 +19,7 @@ functions:
     description: A lambda handler that inserts a URL into a DynamoDB table based on an API Gateway trigger.
     events:
       - http:
-          path: activity/insertbaseurl
+          path: varys/insertbaseurl
           method: POST
   getBaseUrl:
     handler: src/getBaseUrl.handler
@@ -27,5 +27,5 @@ functions:
     description: A lambda handler that gets the base URL from a DynamoDB table based on an API Gateway trigger.
     events:
       - http:
-          path: activity/getbaseurl
+          path: varys/getbaseurl
           method: GET
