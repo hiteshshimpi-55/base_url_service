@@ -3,11 +3,11 @@ module.exports.handler = async (event) => {
   console.log(event);
 
   const response = { statusCode: 200 };
-  const ulr = JSON.parse(event.body).url;
+  const url = JSON.parse(event.body).url;
   const filePath = "./data.json";
   try {
     const updatedData = {
-      base_url: ulr,
+      base_url: url,
     };
 
     await fs.truncate(filePath, 0);
