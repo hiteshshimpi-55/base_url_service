@@ -14,7 +14,7 @@ plugins:
 
 functions:
   insertUrl:
-    handler: src/insertUrl.handler
+    handler: src/insert_url.handler
     name: insert-url
     description: A lambda handler that inserts a URL into a DynamoDB table based on an API Gateway trigger.
     events:
@@ -22,7 +22,7 @@ functions:
           path: varys/insertbaseurl
           method: POST
   getBaseUrl:
-    handler: src/getBaseUrl.handler
+    handler: src/get_url.handler
     name: get-base-url
     description: A lambda handler that gets the base URL from a DynamoDB table based on an API Gateway trigger.
     events:
