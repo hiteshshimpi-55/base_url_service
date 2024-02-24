@@ -1,0 +1,31 @@
+service: activity-service
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: prod
+  region: ap-south-1
+  apiName: ${self:service}
+  memorySize: 128 # MB
+  timeout: 10 # Seconds
+
+plugins:
+  - serverless-iam-roles-per-function
+
+functions:
+  insertUrl:
+    handler: src/insertUrl.handler
+    name: insert-url
+    description: A lambda handler that inserts a URL into a DynamoDB table based on an API Gateway trigger.
+    events:
+      - http:
+          path: activity/insertbaseurl
+          method: POST
+  getBaseUrl:
+    handler: src/getBaseUrl.handler
+    name: get-base-url
+    description: A lambda handler that gets the base URL from a DynamoDB table based on an API Gateway trigger.
+    events:
+      - http:
+          path: activity/getbaseurl
+          method: GET
