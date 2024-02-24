@@ -1,4 +1,4 @@
-service: varys service
+service: varys
 
 provider:
   name: aws
